@@ -2,77 +2,530 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Sign Language Reference</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition - Interactive Guide</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
+        :root {
+            /* Primary Colors */
+            --primary-color: #4361ee;
+            --secondary-color: #7209b7;
+            --accent-color: #4cc9f0;
+            
+            /* Background Colors */
+            --background-color: #f8f9fa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            
+            /* Text Colors */
+            --text-color: #2d3a4b;
+            --text-light: #6b7280;
+            
+            /* Status Colors */
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            
+            /* Gradient Colors */
+            --gradient-1: #4cc9f0;
+            --gradient-2: #7209b7;
+            --gradient-3: #3a0ca3;
+            
+            /* Hover States */
+            --hover-light: rgba(67, 97, 238, 0.1);
+            --hover-dark: rgba(67, 97, 238, 0.9);
+        }
+    
+
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            background: #fff;
-            padding: 32px 24px 24px 24px;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px #b0b8c1;
+
+        .background-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
         }
-        h1 {
-            text-align: center;
-            color: #2d3a4b;
-            margin-bottom: 24px;
+
+       .animated-gradient {
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        top: -50%;
+        left: -50%;
+        animation: rotate 20s linear infinite;
+        background: 
+            radial-gradient(circle at 50% 50%, rgba(76, 201, 240, 0.1) 0%, transparent 25%),
+            radial-gradient(circle at 80% 20%, rgba(114, 9, 183, 0.1) 0%, transparent 25%),
+            radial-gradient(circle at 20% 80%, rgba(58, 12, 163, 0.1) 0%, transparent 25%);
+    }
+
+    .floating-shapes {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .floating-shape {
+        position: absolute;
+        border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+        opacity: 0.05;
+        animation: float 15s ease-in-out infinite;
+    }
+
+    .floating-shape:nth-child(1) {
+        width: 150px;
+        height: 150px;
+        top: 10%;
+        left: 15%;
+        background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+    }
+
+    .floating-shape:nth-child(2) {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        right: 15%;
+        animation-delay: -7s;
+        background: linear-gradient(-45deg, var(--gradient-2), var(--gradient-3));
+    }
+
+    .floating-shape:nth-child(3) {
+        width: 120px;
+        height: 120px;
+        bottom: 15%;
+        left: 25%;
+        animation-delay: -3.5s;
+        background: linear-gradient(135deg, var(--gradient-1), var(--gradient-3));
+    }
+
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/png;base64,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');
+            opacity: 0.02;
+            pointer-events: none;
         }
-        .asl-chart {
-            display: block;
-            margin: 0 auto 24px auto;
-            max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px #b0b8c1;
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
-        .desc {
-            text-align: center;
-            font-size: 1.1em;
-            margin-bottom: 24px;
-            color: #444;
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translate(0, 0) rotate(0deg);
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+            25% { 
+                transform: translate(-15px, 15px) rotate(5deg);
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            }
+            50% { 
+                transform: translate(0, 30px) rotate(-5deg);
+                border-radius: 50%;
+            }
+            75% { 
+                transform: translate(15px, 15px) rotate(5deg);
+                border-radius: 30% 70% 50% 50% / 50% 50% 70% 30%;
+            }
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+
         .nav {
-            text-align: right;
-            margin-bottom: 16px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .nav a {
-            color: #0078D4;
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
             text-decoration: none;
-            margin-left: 18px;
-            font-weight: 500;
-            transition: color 0.2s;
         }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
         .nav a:hover {
-            color: #005a9e;
-            text-decoration: underline;
+            background: rgba(0, 120, 212, 0.1);
+            transform: translateY(-1px);
         }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 0 20px;
+        }
+
+.content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+        .card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-section {
+            grid-column: 1 / -1;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .topic-info {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-info h2 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .topic-info p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .asl-chart {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .asl-chart:hover {
+            transform: scale(1.02);
+        }
+
+        .resources-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .resources-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .resources-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+
+        .resources-list a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .resources-list a:hover {
+            color: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav {
+                flex-direction: column;
+                align-items: center;
+                padding: 0.5rem;
+            }
+
+            .nav-links {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .topic-info {
+                padding: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        /* Add these new styles after your existing styles */
+.live-video-card {
+    text-align: center;
+    background: linear-gradient(135deg, var(--card-bg) 0%, rgba(255,255,255,0.98) 100%);
+    border: 1px solid rgba(76, 201, 240, 0.2);
+    grid-column: 1 / -1;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-btn-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.video-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    padding: 1.2rem 2.4rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(76, 201, 240, 0.3);
+    overflow: hidden;
+}
+
+.video-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 201, 240, 0.4);
+}
+
+.video-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--gradient-2), var(--gradient-3));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-btn:hover::before {
+    opacity: 1;
+}
+
+.btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+.pulse {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--gradient-1), var(--gradient-2));
+    border-radius: 50px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="nav">
+    <div class="background-wrapper">
+        <div class="animated-gradient"></div>
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="noise"></div>
+    </div>
+
+    <nav class="nav">
+        <a href="{{ url_for('index') }}" class="nav-logo">ASL Recognition</a>
+        <div class="nav-links">
             <a href="{{ url_for('index') }}">Home</a>
-            <a href="{{ url_for('sign_language') }}">Sign Language Reference</a>
+            <a href="{{ url_for('view_logs') }}">View Logs</a>
             <a href="{{ url_for('upload') }}">Upload Dataset</a>
         </div>
-        <h1>Sign Language Reference</h1>
-        <div class="desc">
-            Below is a chart of the American Sign Language (ASL) alphabet. Use this as a reference for hand shapes and gestures.
+    </nav>
+
+    <div class="container">
+       
+        <div class="content">
+            <div class="info-section card fade-in">
+                <h1>Sign Language Recognition Guide</h1>
+                <div class="topic-info">
+                    <h2>About Sign Language Recognition</h2>
+                    <p>Sign language is a visual means of communicating using gestures, facial expressions, and body language. 
+                    Our application uses advanced machine learning techniques to recognize and interpret American Sign Language (ASL) 
+                    gestures in real-time, making communication more accessible for everyone.</p>
+                    
+                    <h2>How It Works</h2>
+                    <p>The system uses computer vision to track hand movements and gestures through your camera. 
+                    These movements are analyzed in real-time using a trained machine learning model to recognize 
+                    and translate ASL signs into text, facilitating communication between signers and non-signers.</p>
+
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <div class="feature-icon">👁️</div>
+                            <h3>Real-time Detection</h3>
+                            <p>Instant hand gesture recognition using your camera</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🤖</div>
+                            <h3>ML-Powered</h3>
+                            <p>Advanced machine learning model for accurate recognition</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <h3>Easy to Use</h3>
+                            <p>Simple interface for seamless interaction</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card fade-in" style="animation-delay: 0.2s;">
+                <h2>ASL Alphabet Reference</h2>
+                <img class="asl-chart" 
+                     src="{{ url_for('static', filename='signlanguage.png') }}" 
+                     alt="ASL Alphabet Chart"
+                     onerror="this.style.display='none';document.getElementById('img-error').style.display='block';">
+                <div id="img-error" style="display:none; color:var(--error-color); text-align:center; margin-top: 1rem;">
+                    Unable to load the ASL chart image. Please check your connection.
+                </div>
+            </div>
+
+            <div class="card fade-in" style="animation-delay: 0.4s;">
+                <h2>Additional Resources</h2>
+                <p>Enhance your understanding of American Sign Language with these valuable resources:</p>
+                <ul class="resources-list">
+                    <li><a href="https://www.startasl.com/" target="_blank">Start ASL</a> - Comprehensive ASL learning resources</li>
+                    <li><a href="https://www.handspeak.com/" target="_blank">HandSpeak</a> - ASL dictionary and tutorials</li>
+                    <li><a href="https://www.aslpro.com/" target="_blank">ASL Pro</a> - Professional ASL resources</li>
+                </ul>
+            </div>
+
+            <!-- Add this before closing the content div -->
+            <div class="card fade-in live-video-card" style="animation-delay: 0.6s;">
+                <h2>Try It Live!</h2>
+                <p style="font-size: 1.2rem; margin: 1rem 0;">
+                    Experience real-time sign language recognition with our interactive demo.
+                    Start the live video feed to see ASL recognition in action!
+                </p>
+                <div class="video-btn-container">
+                    <a href="{{ url_for('live_video') }}" class="video-btn">
+                        <span class="pulse"></span>
+                        <span class="btn-text">
+                            <svg style="width:24px; height:24px; margin-right:8px; vertical-align:middle;" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/>
+                            </svg>
+                            Launch Live Demo
+                        </span>
+                    </a>
+                </div>
+            </div>
         </div>
-        <img class="asl-chart" src="{{ url_for('static', filename='9422f99c-d0f2-4d9c-9344-e0504b4e3c99.png') }}" alt="ASL Alphabet Chart">
-             alt="ASL Alphabet Chart"
-             onerror="this.style.display='none';document.getElementById('img-error').style.display='block';">
-        <div id="img-error" style="display:none; color:red; text-align:center;">
-            Unable to load the ASL chart image. Please check your internet connection.
-        </div>
-        <div class="desc">
-            For more information, visit <a href="https://www.startasl.com/" target="_blank">Start ASL</a> or other sign language resources.
-        </div>
-    </div>
-</body>
-</html>
