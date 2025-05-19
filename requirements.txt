@@ -8,3 +8,12 @@ werkzeug==2.0.3
 gunicorn==20.1.0
 nbconvert
 papermill
+flask>=2.0.1
+opencv-python>=4.5.3
+tensorflow>=2.5.0
+numpy>=1.19.5
+pandas>=1.3.0
+jupyter>=1.0.0
+nbconvert>=6.0.7
+ipykernel>=6.0.1
+mediapipe>=0.8.7

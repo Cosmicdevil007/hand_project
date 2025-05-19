@@ -1,0 +1,13 @@
+point_history_classifier_label.csv should contain the labels for the point history classifier. Here is a sample content for the file, assuming it has labels for different gestures or actions:
+
+gesture_id,gesture_name
+0,Unknown
+1,Wave
+2,Point
+3,Thumbs Up
+4,Stop
+5,Peace
+6,Clap
+7,Swipe Left
+8,Swipe Right
+9,Fist
