@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Language Reference</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            padding: 32px 24px 24px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px #b0b8c1;
+        }
+        h1 {
+            text-align: center;
+            color: #2d3a4b;
+            margin-bottom: 24px;
+        }
+        .asl-chart {
+            display: block;
+            margin: 0 auto 24px auto;
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #b0b8c1;
+        }
+        .desc {
+            text-align: center;
+            font-size: 1.1em;
+            margin-bottom: 24px;
+            color: #444;
+        }
+        .nav {
+            text-align: right;
+            margin-bottom: 16px;
+        }
+        .nav a {
+            color: #0078D4;
+            text-decoration: none;
+            margin-left: 18px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav a:hover {
+            color: #005a9e;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('sign_language') }}">Sign Language Reference</a>
+            <a href="{{ url_for('upload') }}">Upload Dataset</a>
+        </div>
+        <h1>Sign Language Reference</h1>
+        <div class="desc">
+            Below is a chart of the American Sign Language (ASL) alphabet. Use this as a reference for hand shapes and gestures.
+        </div>
+        <img class="asl-chart" src="{{ url_for('static', filename='9422f99c-d0f2-4d9c-9344-e0504b4e3c99.png') }}" alt="ASL Alphabet Chart">
+             alt="ASL Alphabet Chart"
+             onerror="this.style.display='none';document.getElementById('img-error').style.display='block';">
+        <div id="img-error" style="display:none; color:red; text-align:center;">
+            Unable to load the ASL chart image. Please check your internet connection.
+        </div>
+        <div class="desc">
+            For more information, visit <a href="https://www.startasl.com/" target="_blank">Start ASL</a> or other sign language resources.
+        </div>
+    </div>
+</body>
+</html>

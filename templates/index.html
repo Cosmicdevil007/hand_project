@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Landing Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fa;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 480px;
+            margin: 80px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            padding: 32px 24px;
+            text-align: center;
+        }
+        h1 {
+            color: #0078D4;
+            margin-bottom: 32px;
+        }
+        .nav-btn {
+            display: block;
+            width: 100%;
+            margin: 16px 0;
+            padding: 14px 0;
+            background: #0078D4;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .nav-btn:hover {
+            background: #005fa3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome </h1>
+        <a href="{{ url_for('upload') }}" class="nav-btn">Upload & Train Dataset</a>
+        <a href="{{ url_for('sign_language') }}" class="nav-btn">Sign Language Recognition</a>
+        <a href="{{ url_for('view_logs') }}" class="nav-btn">View Application Logs</a>
+        <a href="{{ url_for('video_feed') }}" class="nav-btn">Live Video Feed</a>
+    </div>
+</body>
+</html>

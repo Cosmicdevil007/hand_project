@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload New Dataset</title>
+</head>
+<body>
+    <a href="{{ url_for('index') }}">Home</a>
+    <h1>Upload New CSV Dataset</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit">Upload & Train</button>
+    </form>
+    <hr>
+    <h2>Add New Label</h2>
+    <input type="text" id="labelInput" placeholder="Enter label">
+    <button type="button" onclick="addLabel(document.getElementById('labelInput').value)">Add Label</button>
+    <h2>Remove Existing Label</h2>
+    <input type="text" id="removeLabelInput" placeholder="Label to remove">
+    <button type="button" onclick="removeLabel(document.getElementById('removeLabelInput').value)">Remove Label</button>
+    <script>
+      function addLabel(label) {
+          fetch('/add_label', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({label: label})
+          })
+          .then(response => response.json())
+          .then(data => alert(data.message));
+      }
+      function removeLabel(label) {
+          fetch('/remove_label', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({label: label})
+          })
+          .then(response => response.json())
+          .then(data => alert(data.message));
+      }
+    </script>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <a href="{{ url_for('view_logs') }}" style="position: fixed; bottom: 16px; left: 16px; background: #222; color: #fff; padding: 8px 16px; border-radius: 6px; text-decoration: none; font-size: 1em;">View Logs</a>
+</body>
+</html>
