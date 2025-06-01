@@ -21,8 +21,8 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--device", type=int, default=0)
-    parser.add_argument("--width", help='cap width', type=int, default=1280)
-    parser.add_argument("--height", help='cap height', type=int, default=720)
+    parser.add_argument("--width", help='cap width', type=int, default=1080)
+    parser.add_argument("--height", help='cap height', type=int, default=780)
 
     parser.add_argument('--use_static_image_mode', action='store_true')
     parser.add_argument("--min_detection_confidence",
@@ -156,7 +156,7 @@ def main():
 
                 # Hand sign classification
                 hand_sign_id = keypoint_classifier(pre_processed_landmark_list)
-                if hand_sign_id == 2:  # Point gesture
+                if hand_sign_id == 1:  # Point gesture
                     point_history.append(landmark_list[8])
                 else:
                     point_history.append([0, 0])
@@ -585,8 +585,8 @@ def generate_hand_keypoint_frames():
                 pre_processed_landmark_list = pre_process_landmark(landmark_list)
                 pre_processed_point_history_list = pre_process_point_history(debug_image, point_history)
                 hand_sign_id = keypoint_classifier(pre_processed_landmark_list)
-                if hand_sign_id == 2:
-                    point_history.append(landmark_list[8])
+                if hand_sign_id == 1:
+                     point_history.append(landmark_list[8])
                 else:
                     point_history.append([0, 0])
                 finger_gesture_id = 0
