@@ -1,14 +1,14 @@
 Classification Report:
               precision    recall  f1-score   support
 
-        Five       0.98      0.66      0.79       405
-         One       0.81      0.99      0.89       380
-         Two       0.99      0.93      0.96       380
-       Three       0.90      0.96      0.93       393
-        Four       0.76      0.83      0.79       313
-         Six       0.94      0.96      0.95       356
-       Seven       0.90      0.93      0.91       352
+        Five       0.98      0.77      0.86       405
+         One       0.98      0.99      0.99       380
+         Two       0.95      0.97      0.96       380
+       Three       0.92      1.00      0.96       393
+        Four       0.85      0.83      0.84       313
+         Six       0.95      0.94      0.94       356
+       Seven       0.88      1.00      0.93       352
 
-    accuracy                           0.89      2579
-   macro avg       0.90      0.89      0.89      2579
-weighted avg       0.90      0.89      0.89      2579
+    accuracy                           0.93      2579
+   macro avg       0.93      0.93      0.93      2579
+weighted avg       0.93      0.93      0.93      2579

@@ -2,25 +2,22 @@
 
 True Label	Predicted as	Count
 ----------------------------------------
-Five		Four		81
-Five		Three		38
-Four		Seven		33
-Seven		One		25
-Two		One		20
-Five		One		19
-Four		Six		18
-Three		One		14
-Six		One		8
+Four		Seven		46
+Five		Four		45
+Five		Three		32
+Six		Two		18
+Five		Six		9
+Five		One		6
+Four		Six		5
 Six		Five		4
+Two		One		3
 Two		Six		3
 Two		Three		2
 Two		Seven		2
-Five		Six		1
+Five		Two		1
 One		Two		1
 One		Three		1
-Three		Seven		1
+Three		Five		1
 Four		Five		1
-Four		One		1
-Six		Two		1
 Six		Seven		1
 Seven		Four		1
