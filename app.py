@@ -21,7 +21,7 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--device", type=int, default=0)
-    parser.add_argument("--width", help='cap width', type=int, default=1080)
+    parser.add_argument("--width", help='cap width', type=int, default=1280)
     parser.add_argument("--height", help='cap height', type=int, default=780)
 
     parser.add_argument('--use_static_image_mode', action='store_true')
